@@ -1,4 +1,5 @@
 const express = require("express")
+const bodyParser = require("body-parser")
 const http = require("http")
 const socketIo = require("socket.io")
 
@@ -39,6 +40,8 @@ io.on("connect", (socket) => {
   })
 })
 
+app.use(bodyParser.json())
+
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000") // update to match the domain you will make the request from
   res.header(
@@ -50,9 +53,11 @@ app.use(function (req, res, next) {
 
 app.get("/", (req, res) => res.send("hey there"))
 
-app.post("/api/test", (req, res) => {
-  console.log("POST api/test")
-  res.send("hey")
+app.post("/api/make_pick", (req, res) => {
+  console.log("POST: /api/test", req.body)
+  res.send("pick confirmed")
+  // TODO: get league_id from owner_id in req.body + use for socket room
+  io.to(req.body.socketRoom).emit("PickMade", req.body)
 })
 
 server.listen(port, () => console.log("listening at port:", port))
