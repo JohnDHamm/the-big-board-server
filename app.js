@@ -8,28 +8,34 @@ const port = process.env.PORT || 4001
 const server = http.createServer(app)
 const io = socketIo(server)
 
-let count = 0
+io.on("connect", (socket) => {
+  console.log("new client connected", socket.id)
 
-io.on("connection", (socket) => {
-  console.log("new client connected")
-  count = count + 1
-  socket.broadcast.emit("FromAPI", count)
-  socket.emit("StartCheckConnected")
+  socket.on("JoinRoom", (room) => {
+    console.log("joining room:", room)
+    socket.join(room)
+
+    io.to(room).emit("JoinRoomWelcome", "welcome to " + room)
+    io.to(room).emit("StartCheckConnected")
+  })
 
   socket.on("ConfirmConnected", (user) => {
     console.log("confirmed user connected:", user)
-    socket.broadcast.emit("UpdateConnected", `${user.user} has connected`)
+    socket.join(user.socketRoom)
+    socket
+      .to(user.socketRoom)
+      .emit("UpdateConnected", `${user.user} has connected`)
   })
 
   socket.on("test pick", (pick) => {
     console.log("pick came in", pick)
-    socket.broadcast.emit("TestSocket", pick)
+    socket.join(pick.socketRoom)
+    socket.to(pick.socketRoom).emit("TestSocket", pick)
   })
 
   socket.on("disconnect", () => {
     console.log("client disconnected")
-    count = count - 1
-    socket.broadcast.emit("FromAPI", count)
+    socket.broadcast.emit("")
   })
 })
 
