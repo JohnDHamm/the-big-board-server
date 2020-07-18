@@ -70,6 +70,16 @@ app.post("/api/login", (req, res) => {
   res.send(mockOwners.find((owner) => owner.name === req.body.name))
 })
 
+app.get("/api/league/:leagueId", (req, res) => {
+  console.log("req.params", req.params)
+  res.send(mockLeagues.find((league) => league.id === req.params.leagueId))
+})
+
+app.get("/api/owners/:leagueId", (req, res) => {
+  console.log("req.params", req.params)
+  res.send(mockOwners.filter((owner) => owner.leagueId === req.params.leagueId))
+})
+
 app.post("/api/make_pick", (req, res) => {
   console.log("POST: /api/test", req.body)
   res.send("pick confirmed")
