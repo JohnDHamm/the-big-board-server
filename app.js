@@ -1,4 +1,6 @@
 const {mockLeagues} = require("./mocks/leagues")
+const {mockNFLPlayers} = require("./mocks/nfl_players")
+const {mockNFLTeams} = require("./mocks/nfl_teams")
 const {mockOwners} = require("./mocks/owners")
 
 const express = require("express")
@@ -78,6 +80,14 @@ app.get("/api/league/:leagueId", (req, res) => {
 app.get("/api/owners/:leagueId", (req, res) => {
   console.log("req.params", req.params)
   res.send(mockOwners.filter((owner) => owner.leagueId === req.params.leagueId))
+})
+
+app.get("/api/teams", (req, res) => {
+  res.send(mockNFLTeams)
+})
+
+app.get("/api/players", (req, res) => {
+  res.send(mockNFLPlayers)
 })
 
 app.post("/api/make_pick", (req, res) => {
