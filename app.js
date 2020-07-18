@@ -1,3 +1,6 @@
+const {mockLeagues} = require("./mocks/leagues")
+const {mockOwners} = require("./mocks/owners")
+
 const express = require("express")
 const bodyParser = require("body-parser")
 const http = require("http")
@@ -52,6 +55,20 @@ app.use(function (req, res, next) {
 })
 
 app.get("/", (req, res) => res.send("hey there"))
+
+app.get("/api/leagues-list", (req, res) => {
+  console.log("mockLeagues", mockLeagues)
+  const list = mockLeagues.map((league) => ({
+    id: league.id,
+    name: league.name,
+  }))
+  res.send(list)
+})
+
+app.post("/api/login", (req, res) => {
+  console.log("req.body.name", req.body.name)
+  res.send(mockOwners.find((owner) => owner.name === req.body.name))
+})
 
 app.post("/api/make_pick", (req, res) => {
   console.log("POST: /api/test", req.body)
