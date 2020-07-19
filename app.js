@@ -2,6 +2,7 @@ const {mockLeagues} = require("./mocks/leagues")
 const {mockNFLPlayers} = require("./mocks/nfl_players")
 const {mockNFLTeams} = require("./mocks/nfl_teams")
 const {mockOwners} = require("./mocks/owners")
+const {mockNFLPicks} = require("./mocks/picks")
 
 const express = require("express")
 const bodyParser = require("body-parser")
@@ -88,6 +89,18 @@ app.get("/api/teams", (req, res) => {
 
 app.get("/api/players", (req, res) => {
   res.send(mockNFLPlayers)
+})
+
+app.get("/api/picks/:leagueId", (req, res) => {
+  const leaguePicks = mockNFLPicks.filter(
+    (pick) => pick.leagueId === req.params.leagueId
+  )
+  const formattedPicks = leaguePicks.map((pick) => ({
+    selectionNumber: pick.selectionNumber,
+    ownerId: pick.ownerId,
+    playerId: pick.playerId,
+  }))
+  res.send(formattedPicks)
 })
 
 app.post("/api/make_pick", (req, res) => {
