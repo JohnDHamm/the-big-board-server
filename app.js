@@ -1,5 +1,8 @@
 const {mockLeagues} = require("./mocks/leagues")
+const {mockNFLPlayers} = require("./mocks/nfl_players")
+const {mockNFLTeams} = require("./mocks/nfl_teams")
 const {mockOwners} = require("./mocks/owners")
+const {mockNFLPicks} = require("./mocks/picks")
 
 const express = require("express")
 const bodyParser = require("body-parser")
@@ -57,7 +60,6 @@ app.use(function (req, res, next) {
 app.get("/", (req, res) => res.send("hey there"))
 
 app.get("/api/leagues-list", (req, res) => {
-  console.log("mockLeagues", mockLeagues)
   const list = mockLeagues.map((league) => ({
     id: league.id,
     name: league.name,
@@ -68,6 +70,36 @@ app.get("/api/leagues-list", (req, res) => {
 app.post("/api/login", (req, res) => {
   console.log("req.body.name", req.body.name)
   res.send(mockOwners.find((owner) => owner.name === req.body.name))
+})
+
+app.get("/api/league/:leagueId", (req, res) => {
+  console.log("req.params", req.params)
+  res.send(mockLeagues.find((league) => league.id === req.params.leagueId))
+})
+
+app.get("/api/owners/:leagueId", (req, res) => {
+  console.log("req.params", req.params)
+  res.send(mockOwners.filter((owner) => owner.leagueId === req.params.leagueId))
+})
+
+app.get("/api/teams", (req, res) => {
+  res.send(mockNFLTeams)
+})
+
+app.get("/api/players", (req, res) => {
+  res.send(mockNFLPlayers)
+})
+
+app.get("/api/picks/:leagueId", (req, res) => {
+  const leaguePicks = mockNFLPicks.filter(
+    (pick) => pick.leagueId === req.params.leagueId
+  )
+  const formattedPicks = leaguePicks.map((pick) => ({
+    selectionNumber: pick.selectionNumber,
+    ownerId: pick.ownerId,
+    playerId: pick.playerId,
+  }))
+  res.send(formattedPicks)
 })
 
 app.post("/api/make_pick", (req, res) => {
