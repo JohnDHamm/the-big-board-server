@@ -60,7 +60,6 @@ app.use(function (req, res, next) {
 app.get("/", (req, res) => res.send("hey there"))
 
 app.get("/api/leagues-list", (req, res) => {
-  console.log("mockLeagues", mockLeagues)
   const list = mockLeagues.map((league) => ({
     id: league.id,
     name: league.name,
