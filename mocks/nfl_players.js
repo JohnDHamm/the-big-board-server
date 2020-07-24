@@ -65,4 +65,26 @@ module.exports.mockNFLPlayers = [
     teamId: "NO",
     position: "WR",
   },
+  // TE
+  {
+    id: "RGronkowski-TB-TE",
+    firstName: "Rob",
+    lastName: "Gronkowski",
+    teamId: "TB",
+    position: "TE",
+  },
+  {
+    id: "HHenry-LAC-TE",
+    firstName: "Hunter",
+    lastName: "Henry",
+    teamId: "LAC",
+    position: "TE",
+  },
+  {
+    id: "JSprinkle-WAS-TE",
+    firstName: "Jeremy",
+    lastName: "Sprinkle",
+    teamId: "WAS",
+    position: "TE",
+  },
 ]

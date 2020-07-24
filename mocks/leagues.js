@@ -44,6 +44,7 @@ module.exports.mockLeagues = [
       // "Gayland-Nashville_Volleyball-1",
       // "Dorsey-Nashville_Volleyball-1",
     ],
+    scoringType: "non-ppr",
   },
   {
     id: "Angelas_Gang-1",
@@ -77,6 +78,7 @@ module.exports.mockLeagues = [
     ],
     draftStatus: "not started",
     draftOrder: [],
+    scoringType: "non-ppr",
   },
   {
     id: "Third_League-1",
@@ -110,5 +112,6 @@ module.exports.mockLeagues = [
     ],
     draftStatus: "not started",
     draftOrder: [],
+    scoringType: "non-ppr",
   },
 ]

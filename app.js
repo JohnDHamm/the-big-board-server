@@ -3,6 +3,7 @@ const {mockNFLPlayers} = require("./mocks/nfl_players")
 const {mockNFLTeams} = require("./mocks/nfl_teams")
 const {mockOwners} = require("./mocks/owners")
 const {mockNFLPicks} = require("./mocks/picks")
+const {mockPositionRankings} = require("./mocks/position_rankings")
 
 const express = require("express")
 const bodyParser = require("body-parser")
@@ -80,6 +81,15 @@ app.get("/api/league/:leagueId", (req, res) => {
 app.get("/api/owners/:leagueId", (req, res) => {
   console.log("req.params", req.params)
   res.send(mockOwners.filter((owner) => owner.leagueId === req.params.leagueId))
+})
+
+app.get("/api/position_rankings/:scoringType", (req, res) => {
+  console.log("req.params", req.params)
+  res.send(
+    mockPositionRankings.filter(
+      (ranking) => ranking.scoringType === req.params.scoringType
+    )
+  )
 })
 
 app.get("/api/teams", (req, res) => {
