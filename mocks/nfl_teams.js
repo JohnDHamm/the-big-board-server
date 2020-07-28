@@ -393,6 +393,6 @@ module.exports.mockNFLTeams = [
       primary: "#333333",
       secondary: "#DDDDDD",
     },
-    byeWeek: 7,
+    byeWeek: 0,
   },
 ]

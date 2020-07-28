@@ -41,4 +41,25 @@ module.exports.mockNFLPicks = [
     ownerId: "Pat-Nashville_Volleyball-1",
     playerId: "ABrown-TEN-WR",
   },
+  {
+    id: "pick-7",
+    selectionNumber: 7,
+    leagueId: "Nashville_Volleyball-1",
+    ownerId: "Rayne-Nashville_Volleyball-1",
+    playerId: "AThielen-MIN-WR",
+  },
+  {
+    id: "pick-8",
+    selectionNumber: 8,
+    leagueId: "Nashville_Volleyball-1",
+    ownerId: "Richard-Nashville_Volleyball-1",
+    playerId: "RGronkowski-TB-TE",
+  },
+  {
+    id: "pick-9",
+    selectionNumber: 9,
+    leagueId: "Nashville_Volleyball-1",
+    ownerId: "Richard-Nashville_Volleyball-1",
+    playerId: "ARodgers-GB-QB",
+  },
 ]
