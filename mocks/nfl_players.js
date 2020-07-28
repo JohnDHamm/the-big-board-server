@@ -21,6 +21,13 @@ module.exports.mockNFLPlayers = [
     teamId: "NO",
     position: "QB",
   },
+  {
+    id: "ARodgers-GB-QB",
+    firstName: "Aaron",
+    lastName: "Rodgers",
+    teamId: "GB",
+    position: "QB",
+  },
   // RB
   {
     id: "DHenry-TEN-RB",
@@ -65,6 +72,13 @@ module.exports.mockNFLPlayers = [
     teamId: "NO",
     position: "WR",
   },
+  {
+    id: "AThielen-MIN-WR",
+    firstName: "Adam",
+    lastName: "Thielen",
+    teamId: "MIN",
+    position: "WR",
+  },
   // TE
   {
     id: "RGronkowski-TB-TE",
@@ -85,6 +99,13 @@ module.exports.mockNFLPlayers = [
     firstName: "Jeremy",
     lastName: "Sprinkle",
     teamId: "WAS",
+    position: "TE",
+  },
+  {
+    id: "SNotonateam-UNK-TE",
+    firstName: "Someone",
+    lastName: "Notonateam",
+    teamId: "UNK",
     position: "TE",
   },
 ]
