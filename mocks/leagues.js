@@ -2,7 +2,6 @@ module.exports.mockLeagues = [
   {
     id: "Nashville_Volleyball-1",
     name: "Nashville Volleyball",
-    ppr: false,
     positionSlots: [
       {
         position: "QB",
@@ -49,7 +48,6 @@ module.exports.mockLeagues = [
   {
     id: "Angelas_Gang-1",
     name: "Angela's Gang",
-    ppr: false,
     positionSlots: [
       {
         position: "QB",
@@ -83,7 +81,6 @@ module.exports.mockLeagues = [
   {
     id: "Third_League-1",
     name: "Third League",
-    ppr: true,
     positionSlots: [
       {
         position: "QB",
