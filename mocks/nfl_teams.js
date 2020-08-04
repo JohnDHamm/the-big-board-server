@@ -4,7 +4,6 @@ module.exports.mockNFLTeams = [
     city: "Arizona",
     nickname: "Cardinals",
     abbv: "ARI",
-    logo_url: "ari.png",
     colors: {
       primary: "#97233F",
       secondary: "#000000",
@@ -16,7 +15,6 @@ module.exports.mockNFLTeams = [
     city: "Atlanta",
     nickname: "Falcons",
     abbv: "ATL",
-    logo_url: "atl.png",
     colors: {
       primary: "#A71930",
       secondary: "#000000",
@@ -28,7 +26,6 @@ module.exports.mockNFLTeams = [
     city: "Baltimore",
     nickname: "Ravens",
     abbv: "BAL",
-    logo_url: "bal.png",
     colors: {
       primary: "#241773",
       secondary: "#000000",
@@ -40,7 +37,6 @@ module.exports.mockNFLTeams = [
     city: "Buffalo",
     nickname: "Bills",
     abbv: "BUF",
-    logo_url: "buf.png",
     colors: {
       primary: "#00338D",
       secondary: "#C60C30",
@@ -52,7 +48,6 @@ module.exports.mockNFLTeams = [
     city: "Carolina",
     nickname: "Panthers",
     abbv: "CAR",
-    logo_url: "car.png",
     colors: {
       primary: "#0085CA",
       secondary: "#101820",
@@ -64,7 +59,6 @@ module.exports.mockNFLTeams = [
     city: "Chicago",
     nickname: "Bears",
     abbv: "CHI",
-    logo_url: "chi.png",
     colors: {
       primary: "#0B162A",
       secondary: "#C83803",
@@ -76,7 +70,6 @@ module.exports.mockNFLTeams = [
     city: "Cincinnati",
     nickname: "Bengals",
     abbv: "CIN",
-    logo_url: "cin.png",
     colors: {
       primary: "#FB4F14",
       secondary: "#000000",
@@ -88,7 +81,6 @@ module.exports.mockNFLTeams = [
     city: "Cleveland",
     nickname: "Browns",
     abbv: "CLE",
-    logo_url: "cle.png",
     colors: {
       primary: "#311D00",
       secondary: "#FF3C00",
@@ -100,7 +92,6 @@ module.exports.mockNFLTeams = [
     city: "Dallas",
     nickname: "Cowboys",
     abbv: "DAL",
-    logo_url: "dal.png",
     colors: {
       primary: "#041E42",
       secondary: "#869397",
@@ -112,7 +103,6 @@ module.exports.mockNFLTeams = [
     city: "Denver",
     nickname: "Broncos",
     abbv: "DEN",
-    logo_url: "den.png",
     colors: {
       primary: "#002244",
       secondary: "#FB4F14",
@@ -124,7 +114,6 @@ module.exports.mockNFLTeams = [
     city: "Detroit",
     nickname: "Lions",
     abbv: "DET",
-    logo_url: "det.png",
     colors: {
       primary: "#0076B6",
       secondary: "#B0B7BC",
@@ -136,7 +125,6 @@ module.exports.mockNFLTeams = [
     city: "Green Bay",
     nickname: "Packers",
     abbv: "GB",
-    logo_url: "gb.png",
     colors: {
       primary: "#203731",
       secondary: "#FFB612",
@@ -148,7 +136,6 @@ module.exports.mockNFLTeams = [
     city: "Houston",
     nickname: "Texans",
     abbv: "HOU",
-    logo_url: "hou.png",
     colors: {
       primary: "#03202F",
       secondary: "#A71930",
@@ -160,7 +147,6 @@ module.exports.mockNFLTeams = [
     city: "Indianapolis",
     nickname: "Colts",
     abbv: "IND",
-    logo_url: "ind.png",
     colors: {
       primary: "#002C5F",
       secondary: "#A2AAAD",
@@ -172,7 +158,6 @@ module.exports.mockNFLTeams = [
     city: "Jacksonville",
     nickname: "Jaguars",
     abbv: "JAX",
-    logo_url: "jax.png",
     colors: {
       primary: "#006778",
       secondary: "#D7A22A",
@@ -184,7 +169,6 @@ module.exports.mockNFLTeams = [
     city: "Kansas City",
     nickname: "Chiefs",
     abbv: "KC",
-    logo_url: "kc.png",
     colors: {
       primary: "#E31837",
       secondary: "#FFB81C",
@@ -196,7 +180,6 @@ module.exports.mockNFLTeams = [
     city: "Las Vegas",
     nickname: "Raiders",
     abbv: "LV",
-    logo_url: "lv.png",
     colors: {
       primary: "#000000",
       secondary: "#A5ACAF",
@@ -208,7 +191,6 @@ module.exports.mockNFLTeams = [
     city: "Los Angeles",
     nickname: "Chargers",
     abbv: "LAC",
-    logo_url: "lac.png",
     colors: {
       primary: "#0080C6",
       secondary: "#FFC20E",
@@ -220,7 +202,6 @@ module.exports.mockNFLTeams = [
     city: "Los Angeles",
     nickname: "Rams",
     abbv: "LAR",
-    logo_url: "lar.png",
     colors: {
       primary: "#003594",
       secondary: "#FFD100",
@@ -232,7 +213,6 @@ module.exports.mockNFLTeams = [
     city: "Miami",
     nickname: "Dolphins",
     abbv: "MIA",
-    logo_url: "mia.png",
     colors: {
       primary: "#008E97",
       secondary: "#FC4C02",
@@ -244,7 +224,6 @@ module.exports.mockNFLTeams = [
     city: "Minnesota",
     nickname: "Vikings",
     abbv: "MIN",
-    logo_url: "min.png",
     colors: {
       primary: "#4F2683",
       secondary: "#FFC62F",
@@ -256,7 +235,6 @@ module.exports.mockNFLTeams = [
     city: "New England",
     nickname: "Patriots",
     abbv: "NE",
-    logo_url: "ne.png",
     colors: {
       primary: "#002244",
       secondary: "#C60C30",
@@ -268,7 +246,6 @@ module.exports.mockNFLTeams = [
     city: "New Orleans",
     nickname: "Saints",
     abbv: "NO",
-    logo_url: "no.png",
     colors: {
       primary: "#D3BC8D",
       secondary: "#101820",
@@ -280,7 +257,6 @@ module.exports.mockNFLTeams = [
     city: "New York",
     nickname: "Giants",
     abbv: "NYG",
-    logo_url: "nyg.png",
     colors: {
       primary: "#0B2265",
       secondary: "#A71930",
@@ -292,7 +268,6 @@ module.exports.mockNFLTeams = [
     city: "New York",
     nickname: "Jets",
     abbv: "NYJ",
-    logo_url: "nyj.png",
     colors: {
       primary: "#125740",
       secondary: "#E6E7E8",
@@ -304,7 +279,6 @@ module.exports.mockNFLTeams = [
     city: "Philadelphia",
     nickname: "Eagles",
     abbv: "PHI",
-    logo_url: "phi.png",
     colors: {
       primary: "#004C54",
       secondary: "#A5ACAF",
@@ -316,7 +290,6 @@ module.exports.mockNFLTeams = [
     city: "Pittsburgh",
     nickname: "Steelers",
     abbv: "PIT",
-    logo_url: "pit.png",
     colors: {
       primary: "#101820",
       secondary: "#FFB612",
@@ -328,7 +301,6 @@ module.exports.mockNFLTeams = [
     city: "San Francisco",
     nickname: "49ers",
     abbv: "SF",
-    logo_url: "sf.png",
     colors: {
       primary: "#AA0000",
       secondary: "#B3995D",
@@ -340,7 +312,6 @@ module.exports.mockNFLTeams = [
     city: "Seattle",
     nickname: "Seahawks",
     abbv: "SEA",
-    logo_url: "sea.png",
     colors: {
       primary: "#002244",
       secondary: "#69BE28",
@@ -352,7 +323,6 @@ module.exports.mockNFLTeams = [
     city: "Tampa Bay",
     nickname: "Buccaneers",
     abbv: "TB",
-    logo_url: "tb.png",
     colors: {
       primary: "#D50A0A",
       secondary: "#34302B",
@@ -364,7 +334,6 @@ module.exports.mockNFLTeams = [
     city: "Tennessee",
     nickname: "Titans",
     abbv: "TEN",
-    logo_url: "ten.png",
     colors: {
       primary: "#0C2340",
       secondary: "#4B92DB",
@@ -376,7 +345,6 @@ module.exports.mockNFLTeams = [
     city: "Washington",
     nickname: "Football Team",
     abbv: "WAS",
-    logo_url: "was.png",
     colors: {
       primary: "#773141",
       secondary: "#FFB612",
@@ -388,7 +356,6 @@ module.exports.mockNFLTeams = [
     city: "",
     nickname: "",
     abbv: "UNK",
-    logo_url: "unk.png",
     colors: {
       primary: "#333333",
       secondary: "#DDDDDD",
