@@ -4,6 +4,7 @@ const Owner = require("../models/owner.model")
 const Team = require("../models/team.model")
 const Player = require("../models/player.model")
 const Position_Ranking = require("../models/position_ranking.model")
+const {NFL_Teams} = require("../data/nfl_teams")
 
 router.route("/").get((req, res) => {
   res.send("hey there admin!")
@@ -63,6 +64,26 @@ router.route("/owner/:ownerId").patch((req, res) => {
 })
 
 // add all Teams (from file in this repo)
+router.route("/init_teams").post((req, res) => {
+  // console.log("initializing teams", NFL_Teams)
+  NFL_Teams.forEach((team) => {
+    const {city, nickname, abbv, colors, byeWeek} = team
+    console.log("city", city)
+
+    const newTeam = new Team({
+      city,
+      nickname,
+      abbv,
+      colors,
+      byeWeek,
+    })
+
+    newTeam
+      .save()
+      .then(() => res.json("teams initialized"))
+      .catch((err) => res.status(400).json("Error: " + err))
+  })
+})
 
 // create Team
 router.route("/team").post((req, res) => {
@@ -104,7 +125,7 @@ router.route("/player").post((req, res) => {
 
   newPlayer
     .save()
-    .then(() => res.json("player added"))
+    .then((data) => res.json(data))
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
@@ -113,6 +134,13 @@ router.route("/player/:playerId").patch((req, res) => {
   Player.findByIdAndUpdate(req.params.playerId, req.body, {
     new: true,
   })
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json("Error: " + err))
+})
+
+// remove player
+router.route("/player/:playerId").delete((req, res) => {
+  Player.findByIdAndRemove(req.params.playerId)
     .then((data) => res.json(data))
     .catch((err) => res.status(400).json("Error: " + err))
 })
