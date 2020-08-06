@@ -4,6 +4,8 @@ const {mockNFLPicks} = require("../mocks/picks")
 const {mockPositionRankings} = require("../mocks/position_rankings")
 const Team = require("../models/team.model")
 const Player = require("../models/player.model")
+const Owner = require("../models/owner.model")
+const League = require("../models/league.model")
 
 const router = require("express").Router()
 
@@ -12,29 +14,27 @@ router.route("/").get((req, res) => {
 })
 
 router.route("/leagues-list").get((req, res) => {
-  const list = mockLeagues.map((league) => ({
-    id: league.id,
-    name: league.name,
-  }))
-  res.send(list)
+  League.find({}, "_id name")
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json("Error: " + err))
 })
 
 router.route("/login").post((req, res) => {
-  console.log("req.body.name", req.body.name)
-  res.send(mockOwners.find((owner) => owner.name === req.body.name))
-  // Owner.find()
-  //   .then((owners) => res.json(owners))
-  //   .catch((err) => res.status(400).json("Error: " + err))
+  Owner.find({name: req.body.name})
+    .then((owner) => res.json(owner[0]))
+    .catch((err) => res.status(400).json("Error: " + err))
 })
 
 router.route("/league/:leagueId").get((req, res) => {
-  console.log("req.params", req.params)
-  res.send(mockLeagues.find((league) => league.id === req.params.leagueId))
+  League.findById(req.params.leagueId)
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json("Error: " + err))
 })
 
 router.route("/owners/:leagueId").get((req, res) => {
-  console.log("req.params", req.params)
-  res.send(mockOwners.filter((owner) => owner.leagueId === req.params.leagueId))
+  Owner.find({leagueId: req.params.leagueId})
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json("Error: " + err))
 })
 
 router.route("/position_rankings/:scoringType").get((req, res) => {
