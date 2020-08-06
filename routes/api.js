@@ -1,9 +1,9 @@
 const {mockLeagues} = require("../mocks/leagues")
-const {mockNFLPlayers} = require("../mocks/nfl_players")
-const {mockNFLTeams} = require("../mocks/nfl_teams")
 const {mockOwners} = require("../mocks/owners")
 const {mockNFLPicks} = require("../mocks/picks")
 const {mockPositionRankings} = require("../mocks/position_rankings")
+const Team = require("../models/team.model")
+const Player = require("../models/player.model")
 
 const router = require("express").Router()
 
@@ -47,11 +47,15 @@ router.route("/position_rankings/:scoringType").get((req, res) => {
 })
 
 router.route("/teams").get((req, res) => {
-  res.send(mockNFLTeams)
+  Team.find()
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json("Error: " + err))
 })
 
 router.route("/players").get((req, res) => {
-  res.send(mockNFLPlayers)
+  Player.find()
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json("Error: " + err))
 })
 
 router.route("/picks/:leagueId").get((req, res) => {
