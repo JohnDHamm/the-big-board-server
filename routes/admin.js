@@ -10,6 +10,13 @@ router.route("/").get((req, res) => {
   res.send("hey there admin!")
 })
 
+// get Leagues
+router.route("/league").get((req, res) => {
+  League.find()
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json("Error: " + err))
+})
+
 // create League
 router.route("/league").post((req, res) => {
   const {name, positionSlots, draftStatus, draftOrder, scoringType} = req.body
@@ -24,7 +31,7 @@ router.route("/league").post((req, res) => {
 
   newLeague
     .save()
-    .then(() => res.json("league added"))
+    .then((data) => res.json(data))
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
@@ -50,7 +57,7 @@ router.route("/owner").post((req, res) => {
 
   newOwner
     .save()
-    .then(() => res.json("owner added"))
+    .then((data) => res.json(data))
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
