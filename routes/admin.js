@@ -165,7 +165,7 @@ router.route("/position_ranking").post((req, res) => {
 
   newPositionRanking
     .save()
-    .then(() => res.json("ranking added"))
+    .then((data) => res.json(data))
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
