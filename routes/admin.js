@@ -152,6 +152,31 @@ router.route("/player/:playerId").delete((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
+// add all Defenses (after teams are init)
+router.route("/init_defenses").post((req, res) => {
+  Team.find()
+    .then((teams) => {
+      teams.forEach((team) => {
+        const {_id, city, nickname, abbv} = team
+        if (abbv !== "UNK") {
+          const newDefense = new Player({
+            firstName: city,
+            lastName: nickname,
+            teamId: _id,
+            position: "D",
+          })
+
+          newDefense
+            .save()
+            .then((data) => res.json(data))
+            .catch((err) => res.status(400).json("Error: " + err))
+        }
+      })
+    })
+    .then(() => res.json("defenses initalized"))
+    .catch((err) => res.status(400).json("Error: " + err))
+})
+
 // create Position Ranking
 router.route("/position_ranking").post((req, res) => {
   const {position, scoringType, rank, playerId} = req.body
