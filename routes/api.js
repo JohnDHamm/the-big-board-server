@@ -1,9 +1,9 @@
-const {mockNFLPicks} = require("../mocks/picks")
 const Team = require("../models/team.model")
 const Player = require("../models/player.model")
 const Owner = require("../models/owner.model")
 const League = require("../models/league.model")
 const Position_Ranking = require("../models/position_ranking.model")
+const Pick = require("../models/pick.model")
 
 const router = require("express").Router()
 
@@ -54,21 +54,27 @@ router.route("/players").get((req, res) => {
 })
 
 router.route("/picks/:leagueId").get((req, res) => {
-  const leaguePicks = mockNFLPicks.filter(
-    (pick) => pick.leagueId === req.params.leagueId
-  )
-  const formattedPicks = leaguePicks.map((pick) => ({
-    selectionNumber: pick.selectionNumber,
-    ownerId: pick.ownerId,
-    playerId: pick.playerId,
-  }))
-  res.send(formattedPicks)
+  Pick.find({}, "selectionNumber ownerId playerId")
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json("Error: " + err))
 })
 
-router.route("/make_pick").post((req, res) => {
-  console.log("POST: /api/test", req.body)
-  res.send("pick confirmed")
-  // TODO: get league_id from owner_id in req.body + use for socket room
+router.route("/pick").post((req, res) => {
+  const {selectionNumber, leagueId, ownerId, playerId} = req.body
+
+  const newPick = new Pick({
+    selectionNumber,
+    leagueId,
+    ownerId,
+    playerId,
+  })
+
+  newPick
+    .save()
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json("Error: " + err))
+
+  // TODO: use leagueId for socket room
   // io.to(req.body.socketRoom).emit("PickMade", req.body)
 })
 
