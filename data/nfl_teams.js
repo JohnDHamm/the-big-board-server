@@ -25,7 +25,7 @@ module.exports.NFL_Teams = [
     abbv: "BAL",
     colors: {
       primary: "#241773",
-      secondary: "#000000",
+      secondary: "#D2AA41",
     },
     byeWeek: 8,
   },
