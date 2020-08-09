@@ -195,7 +195,7 @@ module.exports.NFL_Teams = [
     abbv: "MIA",
     colors: {
       primary: "#008E97",
-      secondary: "#FC4C02",
+      secondary: "#F5821F",
     },
     byeWeek: 11,
   },
