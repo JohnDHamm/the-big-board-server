@@ -17,12 +17,6 @@ router.route("/leagues-list").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
-router.route("/login").post((req, res) => {
-  Owner.find({name: req.body.name})
-    .then((owner) => res.json(owner[0]))
-    .catch((err) => res.status(400).json("Error: " + err))
-})
-
 router.route("/league/:leagueId").get((req, res) => {
   League.findById(req.params.leagueId)
     .then((data) => res.json(data))
@@ -57,25 +51,6 @@ router.route("/picks/:leagueId").get((req, res) => {
   Pick.find({}, "selectionNumber ownerId playerId")
     .then((data) => res.json(data))
     .catch((err) => res.status(400).json("Error: " + err))
-})
-
-router.route("/pick").post((req, res) => {
-  const {selectionNumber, leagueId, ownerId, playerId} = req.body
-
-  const newPick = new Pick({
-    selectionNumber,
-    leagueId,
-    ownerId,
-    playerId,
-  })
-
-  newPick
-    .save()
-    .then((data) => res.json(data))
-    .catch((err) => res.status(400).json("Error: " + err))
-
-  // TODO: use leagueId for socket room
-  // io.to(req.body.socketRoom).emit("PickMade", req.body)
 })
 
 module.exports = router
