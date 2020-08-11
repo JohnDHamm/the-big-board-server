@@ -3,6 +3,8 @@ const cors = require("cors")
 const http = require("http")
 const socketIo = require("socket.io")
 const mongoose = require("mongoose")
+const Owner = require("./models/owner.model")
+const Pick = require("./models/pick.model")
 
 require("dotenv").config()
 
@@ -19,8 +21,8 @@ io.on("connect", (socket) => {
     console.log("joining room:", room)
     socket.join(room)
 
-    io.to(room).emit("JoinRoomWelcome", "welcome to " + room)
-    io.to(room).emit("StartCheckConnected")
+    // io.to(room).emit("JoinRoomWelcome", "welcome to " + room)
+    // io.to(room).emit("StartCheckConnected")
   })
 
   socket.on("ConfirmConnected", (user) => {
@@ -64,5 +66,37 @@ app.use("/admin", adminRouter)
 app.use("/api", apiRouter)
 
 app.get("/", (req, res) => res.send("hey there"))
+
+// API with response sockets
+app.post("/api/login", (req, res) => {
+  Owner.find({name: req.body.name})
+    .then((owner) => {
+      res.json(owner[0])
+      io.to(req.body.leagueId).emit(
+        "JoinRoomWelcome",
+        req.body.name + " has joined."
+      )
+    })
+    .catch((err) => res.status(400).json("Error: " + err))
+})
+
+app.post("/api/pick", (req, res) => {
+  const {selectionNumber, leagueId, ownerId, playerId} = req.body
+
+  const newPick = new Pick({
+    selectionNumber,
+    leagueId,
+    ownerId,
+    playerId,
+  })
+
+  newPick
+    .save()
+    .then((data) => {
+      res.json(data)
+      io.to(leagueId).emit("PickMade", data)
+    })
+    .catch((err) => res.status(400).json("Error: " + err))
+})
 
 server.listen(port, () => console.log("listening at port:", port))
