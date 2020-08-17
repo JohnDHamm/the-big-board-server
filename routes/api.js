@@ -11,11 +11,11 @@ router.route("/").get((req, res) => {
   res.send("welcome to the api")
 })
 
-router.route("/leagues-list").get((req, res) => {
-  League.find({}, "_id name")
-    .then((data) => res.json(data))
-    .catch((err) => res.status(400).json("Error: " + err))
-})
+// router.route("/leagues-list").get((req, res) => {
+//   League.find({}, "_id name")
+//     .then((data) => res.json(data))
+//     .catch((err) => res.status(400).json("Error: " + err))
+// })
 
 router.route("/league/:leagueId").get((req, res) => {
   League.findById(req.params.leagueId)

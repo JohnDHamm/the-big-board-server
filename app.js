@@ -3,6 +3,7 @@ const cors = require("cors")
 const http = require("http")
 const socketIo = require("socket.io")
 const mongoose = require("mongoose")
+const League = require("./models/league.model")
 const Owner = require("./models/owner.model")
 const Pick = require("./models/pick.model")
 
@@ -79,6 +80,12 @@ app.use("/api", apiRouter)
 app.get("/", (req, res) => res.send("hey there"))
 
 app.get("/api/test", (req, res) => res.send("testing!"))
+
+app.get("/api/leagues-list", (req, res) => {
+  League.find({}, "_id name")
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json("Error: " + err))
+})
 
 // API with response sockets
 app.post("/api/login", (req, res) => {
