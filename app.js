@@ -11,18 +11,18 @@ require("dotenv").config()
 const app = express()
 const port = process.env.PORT || 4001
 
-var whitelist = ["http://localhost:3000"]
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error("Not allowed by CORS"))
-    }
-  },
-}
+// var whitelist = ["http://localhost:3000"]
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error("Not allowed by CORS"))
+//     }
+//   },
+// }
 
-app.use(cors(corsOptions))
+app.use(cors())
 app.use(express.json())
 
 const server = http.createServer(app)
@@ -39,24 +39,24 @@ io.on("connect", (socket) => {
     // io.to(room).emit("StartCheckConnected")
   })
 
-  socket.on("ConfirmConnected", (user) => {
-    console.log("confirmed user connected:", user)
-    socket.join(user.socketRoom)
-    socket
-      .to(user.socketRoom)
-      .emit("UpdateConnected", `${user.user} has connected`)
-  })
+  // socket.on("ConfirmConnected", (user) => {
+  //   console.log("confirmed user connected:", user)
+  //   socket.join(user.socketRoom)
+  //   socket
+  //     .to(user.socketRoom)
+  //     .emit("UpdateConnected", `${user.user} has connected`)
+  // })
 
-  socket.on("test pick", (pick) => {
-    console.log("pick came in", pick)
-    socket.join(pick.socketRoom)
-    socket.to(pick.socketRoom).emit("TestSocket", pick)
-  })
+  // socket.on("test pick", (pick) => {
+  //   console.log("pick came in", pick)
+  //   socket.join(pick.socketRoom)
+  //   socket.to(pick.socketRoom).emit("TestSocket", pick)
+  // })
 
-  socket.on("disconnect", () => {
-    console.log("client disconnected")
-    socket.broadcast.emit("")
-  })
+  // socket.on("disconnect", () => {
+  //   console.log("client disconnected")
+  //   socket.broadcast.emit("")
+  // })
 })
 
 const uri = process.env.ATLAS_URI
@@ -77,6 +77,8 @@ app.use("/admin", adminRouter)
 app.use("/api", apiRouter)
 
 app.get("/", (req, res) => res.send("hey there"))
+
+app.get("/api/test", (req, res) => res.send("testing!"))
 
 // API with response sockets
 app.post("/api/login", (req, res) => {
@@ -112,4 +114,4 @@ app.post("/api/pick", (req, res) => {
 
 server.listen(port, () => console.log("listening at port:", port))
 
-module.exports = app
+module.exports = server
