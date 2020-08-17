@@ -1,5 +1,5 @@
 const express = require("express")
-// const cors = require("cors")
+const cors = require("cors")
 const http = require("http")
 const socketIo = require("socket.io")
 const mongoose = require("mongoose")
@@ -10,6 +10,20 @@ require("dotenv").config()
 
 const app = express()
 const port = process.env.PORT || 4001
+
+var whitelist = ["http://localhost:3000"]
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error("Not allowed by CORS"))
+    }
+  },
+}
+
+app.use(cors(corsOptions))
+app.use(express.json())
 
 const server = http.createServer(app)
 const io = socketIo(server)
@@ -44,30 +58,6 @@ io.on("connect", (socket) => {
     socket.broadcast.emit("")
   })
 })
-
-// app.use(cors())
-app.use(express.json())
-app.use(function (req, res, next) {
-  // Website you wish to allow to connect
-  res.setHeader("Access-Control-Allow-Origin", "*")
-  // Request methods you wish to allow
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-  )
-  // Request headers you wish to allow
-  res.setHeader("Access-Control-Allow-Headers", "X-Requested-With,content-type")
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
-  res.setHeader("Access-Control-Allow-Credentials", true)
-  // Pass to next layer of middleware
-  next()
-})
-
-// app.use((req, res, next) => {
-//   res.set("Access-Control-Allow-Origin", "*")
-//   next()
-// })
 
 const uri = process.env.ATLAS_URI
 mongoose.connect(uri, {
@@ -122,4 +112,4 @@ app.post("/api/pick", (req, res) => {
 
 server.listen(port, () => console.log("listening at port:", port))
 
-module.exports = server
+module.exports = app
