@@ -11,6 +11,9 @@ require("dotenv").config()
 const app = express()
 const port = process.env.PORT || 4001
 
+app.use(cors())
+app.use(express.json())
+
 const server = http.createServer(app)
 const io = socketIo(server)
 
@@ -25,28 +28,25 @@ io.on("connect", (socket) => {
     // io.to(room).emit("StartCheckConnected")
   })
 
-  socket.on("ConfirmConnected", (user) => {
-    console.log("confirmed user connected:", user)
-    socket.join(user.socketRoom)
-    socket
-      .to(user.socketRoom)
-      .emit("UpdateConnected", `${user.user} has connected`)
-  })
+  // socket.on("ConfirmConnected", (user) => {
+  //   console.log("confirmed user connected:", user)
+  //   socket.join(user.socketRoom)
+  //   socket
+  //     .to(user.socketRoom)
+  //     .emit("UpdateConnected", `${user.user} has connected`)
+  // })
 
-  socket.on("test pick", (pick) => {
-    console.log("pick came in", pick)
-    socket.join(pick.socketRoom)
-    socket.to(pick.socketRoom).emit("TestSocket", pick)
-  })
+  // socket.on("test pick", (pick) => {
+  //   console.log("pick came in", pick)
+  //   socket.join(pick.socketRoom)
+  //   socket.to(pick.socketRoom).emit("TestSocket", pick)
+  // })
 
-  socket.on("disconnect", () => {
-    console.log("client disconnected")
-    socket.broadcast.emit("")
-  })
+  // socket.on("disconnect", () => {
+  //   console.log("client disconnected")
+  //   socket.broadcast.emit("")
+  // })
 })
-
-app.use(cors())
-app.use(express.json())
 
 const uri = process.env.ATLAS_URI
 mongoose.connect(uri, {
@@ -66,6 +66,8 @@ app.use("/admin", adminRouter)
 app.use("/api", apiRouter)
 
 app.get("/", (req, res) => res.send("hey there"))
+
+app.get("/api/test", (req, res) => res.send("testing!"))
 
 // API with response sockets
 app.post("/api/login", (req, res) => {
