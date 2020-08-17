@@ -101,4 +101,4 @@ app.post("/api/pick", (req, res) => {
 
 server.listen(port, () => console.log("listening at port:", port))
 
-module.exports = app
+module.exports = server
