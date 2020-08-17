@@ -67,8 +67,6 @@ app.use("/api", apiRouter)
 
 app.get("/", (req, res) => res.send("hey there"))
 
-app.get("/api/test", (req, res) => res.send("testing!"))
-
 // API with response sockets
 app.post("/api/login", (req, res) => {
   Owner.find({name: req.body.name})
