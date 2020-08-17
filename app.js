@@ -3,7 +3,6 @@ const cors = require("cors")
 const http = require("http")
 const socketIo = require("socket.io")
 const mongoose = require("mongoose")
-// const League = require("./models/league.model")
 const Owner = require("./models/owner.model")
 const Pick = require("./models/pick.model")
 
@@ -11,17 +10,6 @@ require("dotenv").config()
 
 const app = express()
 const port = process.env.PORT || 4001
-
-// var whitelist = ["http://localhost:3000"]
-// var corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error("Not allowed by CORS"))
-//     }
-//   },
-// }
 
 app.use(cors())
 app.use(express.json())
@@ -81,12 +69,6 @@ app.get("/", (req, res) => res.send("hey there"))
 
 app.get("/api/test", (req, res) => res.send("testing!"))
 
-// app.get("/api/leagues-list", (req, res) => {
-//   League.find({}, "_id name")
-//     .then((data) => res.json(data))
-//     .catch((err) => res.status(400).json("Error: " + err))
-// })
-
 // API with response sockets
 app.post("/api/login", (req, res) => {
   Owner.find({name: req.body.name})
@@ -120,5 +102,3 @@ app.post("/api/pick", (req, res) => {
 })
 
 server.listen(port, () => console.log("listening at port:", port))
-
-module.exports = server
