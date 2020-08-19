@@ -3,6 +3,7 @@ const cors = require("cors")
 const http = require("http")
 const socketIo = require("socket.io")
 const mongoose = require("mongoose")
+const League = require("./models/league.model")
 const Owner = require("./models/owner.model")
 const Pick = require("./models/pick.model")
 
@@ -34,12 +35,6 @@ io.on("connect", (socket) => {
   //   socket
   //     .to(user.socketRoom)
   //     .emit("UpdateConnected", `${user.user} has connected`)
-  // })
-
-  // socket.on("test pick", (pick) => {
-  //   console.log("pick came in", pick)
-  //   socket.join(pick.socketRoom)
-  //   socket.to(pick.socketRoom).emit("TestSocket", pick)
   // })
 
   // socket.on("disconnect", () => {
@@ -95,6 +90,18 @@ app.post("/api/pick", (req, res) => {
     .then((data) => {
       res.json(data)
       io.to(leagueId).emit("PickMade", data)
+    })
+    .catch((err) => res.status(400).json("Error: " + err))
+})
+
+app.patch("/api/draft_status/:leagueId", (req, res) => {
+  const {leagueId} = req.params
+  League.findByIdAndUpdate(leagueId, req.body, {
+    new: true,
+  })
+    .then((data) => {
+      res.json(data)
+      io.to(leagueId).emit("DraftStatusUpdate", req.body.draftStatus)
     })
     .catch((err) => res.status(400).json("Error: " + err))
 })
