@@ -64,13 +64,37 @@ app.get("/", (req, res) => res.send("hey there"))
 
 // API with response sockets
 app.post("/api/login", (req, res) => {
-  Owner.find({name: req.body.name})
-    .then((owner) => {
-      res.json(owner[0])
-      io.to(req.body.leagueId).emit(
-        "JoinRoomWelcome",
-        req.body.name + " has joined."
-      )
+  Owner.find({
+    name: req.body.name,
+    leagueId: req.body.leagueId,
+  })
+    .then((owners) => {
+      if (owners[0]) {
+        const user = owners[0]
+        if (req.body.password === user.password) {
+          const newUser = {
+            _id: user._id,
+            name: user.name,
+            leagueId: user.leagueId,
+            isCommish: user.isCommish,
+          }
+          res.json(newUser)
+          io.to(req.body.leagueId).emit(
+            "JoinRoomWelcome",
+            req.body.name + " has joined."
+          )
+        } else {
+          res.status(404).json({
+            status: "error",
+            message: "Incorrect Password!",
+          })
+        }
+      } else {
+        res.status(404).json({
+          status: "error",
+          message: "User does not exist!",
+        })
+      }
     })
     .catch((err) => res.status(400).json("Error: " + err))
 })
