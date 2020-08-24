@@ -5,6 +5,8 @@ const Team = require("../models/team.model")
 const Player = require("../models/player.model")
 const Position_Ranking = require("../models/position_ranking.model")
 const {NFL_Teams} = require("../data/nfl_teams")
+const {POSITION_RANKINGS_TOTALS} = require("../data/position_rankings")
+const {route} = require("./api")
 
 router.route("/").get((req, res) => {
   res.send("hey there admin!")
@@ -92,6 +94,13 @@ router.route("/init_teams").post((req, res) => {
   })
 })
 
+// get team
+router.route("/team/:teamId").get((req, res) => {
+  Team.find({_id: req.params.teamId})
+    .then((data) => res.json(data[0]))
+    .catch((err) => res.status(400).json("Error: " + err))
+})
+
 // create Team
 router.route("/team").post((req, res) => {
   const {city, nickname, abbv, colors, byeWeek} = req.body
@@ -116,6 +125,13 @@ router.route("/team/:teamId").patch((req, res) => {
     new: true,
   })
     .then((data) => res.json(data))
+    .catch((err) => res.status(400).json("Error: " + err))
+})
+
+// get player
+router.route("/player/:playerId").get((req, res) => {
+  Player.find({_id: req.params.playerId})
+    .then((data) => res.json(data[0]))
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
@@ -175,6 +191,27 @@ router.route("/init_defenses").post((req, res) => {
     })
     .then(() => res.json("defenses initalized"))
     .catch((err) => res.status(400).json("Error: " + err))
+})
+
+// init all empty position rankings
+router.route("/init_pos_rankings/:scoringType").post((req, res) => {
+  const positions = Object.keys(POSITION_RANKINGS_TOTALS)
+  // console.log("positions", positions)
+  positions.forEach((pos) => {
+    for (let i = 1; i < POSITION_RANKINGS_TOTALS[pos] + 1; i++) {
+      const newPosRanking = new Position_Ranking({
+        position: pos,
+        scoringType: req.params.scoringType,
+        rank: i,
+        playerId: "",
+      })
+
+      newPosRanking
+        .save()
+        .then((data) => res.json(data))
+        .catch((err) => res.status(400).json("Error: " + err))
+    }
+  })
 })
 
 // create Position Ranking
