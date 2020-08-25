@@ -55,7 +55,7 @@ router.route("/players").get((req, res) => {
 })
 
 router.route("/picks/:leagueId").get((req, res) => {
-  Pick.find({}, "selectionNumber ownerId playerId")
+  Pick.find({leagueId: req.params.leagueId}, "selectionNumber ownerId playerId")
     .then((data) => res.json(data))
     .catch((err) => res.status(400).json("Error: " + err))
 })
