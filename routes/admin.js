@@ -4,6 +4,7 @@ const Owner = require("../models/owner.model")
 const Team = require("../models/team.model")
 const Player = require("../models/player.model")
 const Position_Ranking = require("../models/position_ranking.model")
+const Overall_Ranking = require("../models/overall_ranking.model")
 const {NFL_Teams} = require("../data/nfl_teams")
 const {POSITION_RANKINGS_TOTALS} = require("../data/position_rankings")
 const {route} = require("./api")
@@ -234,6 +235,46 @@ router.route("/position_ranking").post((req, res) => {
 // update Position Ranking
 router.route("/position_ranking/:position_rankingId").patch((req, res) => {
   Position_Ranking.findByIdAndUpdate(req.params.position_rankingId, req.body, {
+    new: true,
+  })
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json("Error: " + err))
+})
+// init all empty overall rankings
+router.route("/init_overall_rankings/:scoringType").post((req, res) => {
+  for (let i = 1; i < 301; i++) {
+    const newOverallRanking = new Overall_Ranking({
+      scoringType: req.params.scoringType,
+      rank: i,
+      playerId: "",
+    })
+
+    newOverallRanking
+      .save()
+      .then((data) => res.json(data))
+      .catch((err) => res.status(400).json("Error: " + err))
+  }
+})
+
+// create Overall Ranking
+router.route("/overall_ranking").post((req, res) => {
+  const {scoringType, rank, playerId} = req.body
+
+  const newOverallRanking = new Overall_Ranking({
+    scoringType,
+    rank,
+    playerId,
+  })
+
+  newOverallRanking
+    .save()
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json("Error: " + err))
+})
+
+// update Overall Ranking
+router.route("/overall_ranking/:overall_rankingId").patch((req, res) => {
+  Overall_Ranking.findByIdAndUpdate(req.params.overall_rankingId, req.body, {
     new: true,
   })
     .then((data) => res.json(data))
