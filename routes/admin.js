@@ -2,6 +2,7 @@ const router = require("express").Router()
 const League = require("../models/league.model")
 const Owner = require("../models/owner.model")
 const Team = require("../models/team.model")
+const Pick = require("../models/pick.model")
 const Player = require("../models/player.model")
 const Position_Ranking = require("../models/position_ranking.model")
 const Overall_Ranking = require("../models/overall_ranking.model")
@@ -277,6 +278,13 @@ router.route("/overall_ranking/:overall_rankingId").patch((req, res) => {
   Overall_Ranking.findByIdAndUpdate(req.params.overall_rankingId, req.body, {
     new: true,
   })
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json("Error: " + err))
+})
+
+// remove pick
+router.route("/pick/:pickId").delete((req, res) => {
+  Pick.findByIdAndRemove(req.params.pickId)
     .then((data) => res.json(data))
     .catch((err) => res.status(400).json("Error: " + err))
 })
