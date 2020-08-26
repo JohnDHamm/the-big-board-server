@@ -25,7 +25,7 @@ router.route("/league/:leagueId").get((req, res) => {
 })
 
 router.route("/owners/:leagueId").get((req, res) => {
-  Owner.find({leagueId: req.params.leagueId})
+  Owner.find({leagueId: req.params.leagueId}, "name leagueId isCommish")
     .then((data) => res.json(data))
     .catch((err) => res.status(400).json("Error: " + err))
 })
