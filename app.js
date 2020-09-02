@@ -146,4 +146,36 @@ app.patch("/commish/start_draft", (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
+app.patch("/commish/pause_draft", (req, res) => {
+  const {leagueId, message} = req.body
+  League.findByIdAndUpdate(
+    leagueId,
+    {draftStatus: "paused"},
+    {
+      new: true,
+    }
+  )
+    .then((data) => {
+      res.json(data)
+      io.to(leagueId).emit("DraftPaused", message)
+    })
+    .catch((err) => res.status(400).json("Error: " + err))
+})
+
+app.patch("/commish/reopen_draft", (req, res) => {
+  const {leagueId, message} = req.body
+  League.findByIdAndUpdate(
+    leagueId,
+    {draftStatus: "open"},
+    {
+      new: true,
+    }
+  )
+    .then((data) => {
+      res.json(data)
+      io.to(leagueId).emit("DraftReopened", message)
+    })
+    .catch((err) => res.status(400).json("Error: " + err))
+})
+
 server.listen(port, () => console.log("listening at port:", port))
