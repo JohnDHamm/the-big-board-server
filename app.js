@@ -130,4 +130,20 @@ app.patch("/api/draft_status/:leagueId", (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
+app.patch("/commish/start_draft", (req, res) => {
+  const {leagueId, message} = req.body
+  League.findByIdAndUpdate(
+    leagueId,
+    {draftStatus: "open"},
+    {
+      new: true,
+    }
+  )
+    .then((data) => {
+      res.json(data)
+      io.to(leagueId).emit("DraftStarted", message)
+    })
+    .catch((err) => res.status(400).json("Error: " + err))
+})
+
 server.listen(port, () => console.log("listening at port:", port))
