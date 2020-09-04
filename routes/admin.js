@@ -74,6 +74,20 @@ router.route("/owner/:ownerId").patch((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
+// get all owners
+router.route("/all_owners").get((req, res) => {
+  Owner.find()
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json("Error: " + err))
+})
+
+// remove owner
+router.route("/owner/:ownerId").delete((req, res) => {
+  Owner.findByIdAndRemove(req.params.ownerId)
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json("Error: " + err))
+})
+
 // add all Teams (from file in this repo)
 router.route("/init_teams").post((req, res) => {
   // console.log("initializing teams", NFL_Teams)
