@@ -303,4 +303,11 @@ router.route("/pick/:pickId").delete((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
+// remove all picks by league
+router.route("/remove_picks/:leagueId").delete((req, res) => {
+  Pick.deleteMany({leagueId: req.params.leagueId})
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json("Error: " + err))
+})
+
 module.exports = router
