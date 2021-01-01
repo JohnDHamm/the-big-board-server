@@ -14,6 +14,27 @@ router.route("/").get((req, res) => {
   res.send("hey there admin!")
 })
 
+router.route("/login").post((req, res) => {
+  const {name, password} = req.body
+  if (name === process.env.ADMIN_NAME) {
+    if (password === process.env.ADMIN_PASSWORD) {
+      res.status(200).json({
+        user: name,
+      })
+    } else {
+      res.status(401).json({
+        status: "error",
+        message: "Password does not match!",
+      })
+    }
+  } else {
+    res.status(401).json({
+      status: "error",
+      message: "User does not exist!",
+    })
+  }
+})
+
 // get Leagues
 router.route("/league").get((req, res) => {
   League.find()
