@@ -8,7 +8,26 @@ const Position_Ranking = require("../models/position_ranking.model")
 const Overall_Ranking = require("../models/overall_ranking.model")
 const {NFL_Teams} = require("../data/nfl_teams")
 const {POSITION_RANKINGS_TOTALS} = require("../data/position_rankings")
-const {route} = require("./api")
+const jwt = require("jsonwebtoken")
+
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"]
+  const token = authHeader && authHeader.split(" ")[1]
+
+  if (!token)
+    return res.status(401).send({auth: false, message: "No token provided."})
+
+  jwt.verify(token, process.env.ADMIN_TOKEN_SECRET, (err, user) => {
+    if (err) {
+      console.log(err)
+      return res
+        .status(500)
+        .send({auth: false, message: "Failed to authenticate token."})
+    }
+    req.user = user
+    next()
+  })
+}
 
 router.route("/").get((req, res) => {
   res.send("hey there admin!")
@@ -18,8 +37,10 @@ router.route("/login").post((req, res) => {
   const {name, password} = req.body
   if (name === process.env.ADMIN_NAME) {
     if (password === process.env.ADMIN_PASSWORD) {
+      const token = jwt.sign(name, process.env.ADMIN_TOKEN_SECRET)
       res.status(200).json({
         user: name,
+        accessToken: token,
       })
     } else {
       res.status(401).json({
@@ -36,14 +57,14 @@ router.route("/login").post((req, res) => {
 })
 
 // get Leagues
-router.route("/league").get((req, res) => {
+router.route("/league").get(authenticateToken, (req, res) => {
   League.find()
     .then((data) => res.json(data))
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
 // create League
-router.route("/league").post((req, res) => {
+router.route("/league").post(authenticateToken, (req, res) => {
   const {name, positionSlots, draftStatus, draftOrder, scoringType} = req.body
 
   const newLeague = new League({
@@ -61,7 +82,7 @@ router.route("/league").post((req, res) => {
 })
 
 // update League
-router.route("/league/:leagueId").patch((req, res) => {
+router.route("/league/:leagueId").patch(authenticateToken, (req, res) => {
   League.findByIdAndUpdate(req.params.leagueId, req.body, {
     new: true,
   })
