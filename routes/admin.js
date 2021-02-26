@@ -131,7 +131,7 @@ router.route("/owner/:ownerId").delete(authenticateToken, (req, res) => {
 })
 
 // add all Teams (from file in this repo)
-router.route("/init_teams").post((req, res) => {
+router.route("/init_teams").post(authenticateToken, (req, res) => {
   // console.log("initializing teams", NFL_Teams)
   NFL_Teams.forEach((team) => {
     const {city, nickname, abbv, colors, byeWeek} = team
@@ -153,14 +153,14 @@ router.route("/init_teams").post((req, res) => {
 })
 
 // get team
-router.route("/team/:teamId").get((req, res) => {
+router.route("/team/:teamId").get(authenticateToken, (req, res) => {
   Team.find({_id: req.params.teamId})
     .then((data) => res.json(data[0]))
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
 // create Team
-router.route("/team").post((req, res) => {
+router.route("/team").post(authenticateToken, (req, res) => {
   const {city, nickname, abbv, colors, byeWeek} = req.body
 
   const newTeam = new Team({
@@ -178,7 +178,7 @@ router.route("/team").post((req, res) => {
 })
 
 // update Team
-router.route("/team/:teamId").patch((req, res) => {
+router.route("/team/:teamId").patch(authenticateToken, (req, res) => {
   Team.findByIdAndUpdate(req.params.teamId, req.body, {
     new: true,
   })
@@ -187,14 +187,14 @@ router.route("/team/:teamId").patch((req, res) => {
 })
 
 // get player
-router.route("/player/:playerId").get((req, res) => {
+router.route("/player/:playerId").get(authenticateToken, (req, res) => {
   Player.find({_id: req.params.playerId})
     .then((data) => res.json(data[0]))
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
 // create Player
-router.route("/player").post((req, res) => {
+router.route("/player").post(authenticateToken, (req, res) => {
   const {firstName, lastName, teamId, position} = req.body
 
   const newPlayer = new Player({
@@ -211,7 +211,7 @@ router.route("/player").post((req, res) => {
 })
 
 // update Player
-router.route("/player/:playerId").patch((req, res) => {
+router.route("/player/:playerId").patch(authenticateToken, (req, res) => {
   Player.findByIdAndUpdate(req.params.playerId, req.body, {
     new: true,
   })
@@ -220,14 +220,14 @@ router.route("/player/:playerId").patch((req, res) => {
 })
 
 // remove player
-router.route("/player/:playerId").delete((req, res) => {
+router.route("/player/:playerId").delete(authenticateToken, (req, res) => {
   Player.findByIdAndRemove(req.params.playerId)
     .then((data) => res.json(data))
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
 // add all Defenses (after teams are init)
-router.route("/init_defenses").post((req, res) => {
+router.route("/init_defenses").post(authenticateToken, (req, res) => {
   Team.find()
     .then((teams) => {
       teams.forEach((team) => {
