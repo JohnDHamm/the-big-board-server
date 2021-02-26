@@ -91,7 +91,7 @@ router.route("/league/:leagueId").patch(authenticateToken, (req, res) => {
 })
 
 // create Owner
-router.route("/owner").post((req, res) => {
+router.route("/owner").post(authenticateToken, (req, res) => {
   const {name, leagueId, isCommish, password} = req.body
 
   const newOwner = new Owner({
@@ -108,7 +108,7 @@ router.route("/owner").post((req, res) => {
 })
 
 // update Owner
-router.route("/owner/:ownerId").patch((req, res) => {
+router.route("/owner/:ownerId").patch(authenticateToken, (req, res) => {
   Owner.findByIdAndUpdate(req.params.ownerId, req.body, {
     new: true,
   })
@@ -117,21 +117,21 @@ router.route("/owner/:ownerId").patch((req, res) => {
 })
 
 // get all owners
-router.route("/all_owners").get((req, res) => {
+router.route("/all_owners").get(authenticateToken, (req, res) => {
   Owner.find()
     .then((data) => res.json(data))
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
 // remove owner
-router.route("/owner/:ownerId").delete((req, res) => {
+router.route("/owner/:ownerId").delete(authenticateToken, (req, res) => {
   Owner.findByIdAndRemove(req.params.ownerId)
     .then((data) => res.json(data))
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
 // add all Teams (from file in this repo)
-router.route("/init_teams").post((req, res) => {
+router.route("/init_teams").post(authenticateToken, (req, res) => {
   // console.log("initializing teams", NFL_Teams)
   NFL_Teams.forEach((team) => {
     const {city, nickname, abbv, colors, byeWeek} = team
@@ -153,14 +153,14 @@ router.route("/init_teams").post((req, res) => {
 })
 
 // get team
-router.route("/team/:teamId").get((req, res) => {
+router.route("/team/:teamId").get(authenticateToken, (req, res) => {
   Team.find({_id: req.params.teamId})
     .then((data) => res.json(data[0]))
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
 // create Team
-router.route("/team").post((req, res) => {
+router.route("/team").post(authenticateToken, (req, res) => {
   const {city, nickname, abbv, colors, byeWeek} = req.body
 
   const newTeam = new Team({
@@ -178,7 +178,7 @@ router.route("/team").post((req, res) => {
 })
 
 // update Team
-router.route("/team/:teamId").patch((req, res) => {
+router.route("/team/:teamId").patch(authenticateToken, (req, res) => {
   Team.findByIdAndUpdate(req.params.teamId, req.body, {
     new: true,
   })
@@ -187,14 +187,14 @@ router.route("/team/:teamId").patch((req, res) => {
 })
 
 // get player
-router.route("/player/:playerId").get((req, res) => {
+router.route("/player/:playerId").get(authenticateToken, (req, res) => {
   Player.find({_id: req.params.playerId})
     .then((data) => res.json(data[0]))
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
 // create Player
-router.route("/player").post((req, res) => {
+router.route("/player").post(authenticateToken, (req, res) => {
   const {firstName, lastName, teamId, position} = req.body
 
   const newPlayer = new Player({
@@ -211,7 +211,7 @@ router.route("/player").post((req, res) => {
 })
 
 // update Player
-router.route("/player/:playerId").patch((req, res) => {
+router.route("/player/:playerId").patch(authenticateToken, (req, res) => {
   Player.findByIdAndUpdate(req.params.playerId, req.body, {
     new: true,
   })
@@ -220,14 +220,14 @@ router.route("/player/:playerId").patch((req, res) => {
 })
 
 // remove player
-router.route("/player/:playerId").delete((req, res) => {
+router.route("/player/:playerId").delete(authenticateToken, (req, res) => {
   Player.findByIdAndRemove(req.params.playerId)
     .then((data) => res.json(data))
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
 // add all Defenses (after teams are init)
-router.route("/init_defenses").post((req, res) => {
+router.route("/init_defenses").post(authenticateToken, (req, res) => {
   Team.find()
     .then((teams) => {
       teams.forEach((team) => {
@@ -252,28 +252,30 @@ router.route("/init_defenses").post((req, res) => {
 })
 
 // init all empty position rankings
-router.route("/init_pos_rankings/:scoringType").post((req, res) => {
-  const positions = Object.keys(POSITION_RANKINGS_TOTALS)
-  // console.log("positions", positions)
-  positions.forEach((pos) => {
-    for (let i = 1; i < POSITION_RANKINGS_TOTALS[pos] + 1; i++) {
-      const newPosRanking = new Position_Ranking({
-        position: pos,
-        scoringType: req.params.scoringType,
-        rank: i,
-        playerId: "",
-      })
+router
+  .route("/init_pos_rankings/:scoringType")
+  .post(authenticateToken, (req, res) => {
+    const positions = Object.keys(POSITION_RANKINGS_TOTALS)
+    // console.log("positions", positions)
+    positions.forEach((pos) => {
+      for (let i = 1; i < POSITION_RANKINGS_TOTALS[pos] + 1; i++) {
+        const newPosRanking = new Position_Ranking({
+          position: pos,
+          scoringType: req.params.scoringType,
+          rank: i,
+          playerId: "",
+        })
 
-      newPosRanking
-        .save()
-        .then((data) => res.json(data))
-        .catch((err) => res.status(400).json("Error: " + err))
-    }
+        newPosRanking
+          .save()
+          .then((data) => res.json(data))
+          .catch((err) => res.status(400).json("Error: " + err))
+      }
+    })
   })
-})
 
 // create Position Ranking
-router.route("/position_ranking").post((req, res) => {
+router.route("/position_ranking").post(authenticateToken, (req, res) => {
   const {position, scoringType, rank, playerId} = req.body
 
   const newPositionRanking = new Position_Ranking({
@@ -290,31 +292,40 @@ router.route("/position_ranking").post((req, res) => {
 })
 
 // update Position Ranking
-router.route("/position_ranking/:position_rankingId").patch((req, res) => {
-  Position_Ranking.findByIdAndUpdate(req.params.position_rankingId, req.body, {
-    new: true,
-  })
-    .then((data) => res.json(data))
-    .catch((err) => res.status(400).json("Error: " + err))
-})
-// init all empty overall rankings
-router.route("/init_overall_rankings/:scoringType").post((req, res) => {
-  for (let i = 1; i < 301; i++) {
-    const newOverallRanking = new Overall_Ranking({
-      scoringType: req.params.scoringType,
-      rank: i,
-      playerId: "",
-    })
-
-    newOverallRanking
-      .save()
+router
+  .route("/position_ranking/:position_rankingId")
+  .patch(authenticateToken, (req, res) => {
+    Position_Ranking.findByIdAndUpdate(
+      req.params.position_rankingId,
+      req.body,
+      {
+        new: true,
+      }
+    )
       .then((data) => res.json(data))
       .catch((err) => res.status(400).json("Error: " + err))
-  }
-})
+  })
+
+// init all empty overall rankings
+router
+  .route("/init_overall_rankings/:scoringType")
+  .post(authenticateToken, (req, res) => {
+    for (let i = 1; i < 301; i++) {
+      const newOverallRanking = new Overall_Ranking({
+        scoringType: req.params.scoringType,
+        rank: i,
+        playerId: "",
+      })
+
+      newOverallRanking
+        .save()
+        .then((data) => res.json(data))
+        .catch((err) => res.status(400).json("Error: " + err))
+    }
+  })
 
 // create Overall Ranking
-router.route("/overall_ranking").post((req, res) => {
+router.route("/overall_ranking").post(authenticateToken, (req, res) => {
   const {scoringType, rank, playerId} = req.body
 
   const newOverallRanking = new Overall_Ranking({
@@ -330,26 +341,30 @@ router.route("/overall_ranking").post((req, res) => {
 })
 
 // update Overall Ranking
-router.route("/overall_ranking/:overall_rankingId").patch((req, res) => {
-  Overall_Ranking.findByIdAndUpdate(req.params.overall_rankingId, req.body, {
-    new: true,
+router
+  .route("/overall_ranking/:overall_rankingId")
+  .patch(authenticateToken, (req, res) => {
+    Overall_Ranking.findByIdAndUpdate(req.params.overall_rankingId, req.body, {
+      new: true,
+    })
+      .then((data) => res.json(data))
+      .catch((err) => res.status(400).json("Error: " + err))
   })
-    .then((data) => res.json(data))
-    .catch((err) => res.status(400).json("Error: " + err))
-})
 
 // remove pick
-router.route("/pick/:pickId").delete((req, res) => {
+router.route("/pick/:pickId").delete(authenticateToken, (req, res) => {
   Pick.findByIdAndRemove(req.params.pickId)
     .then((data) => res.json(data))
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
 // remove all picks by league
-router.route("/remove_picks/:leagueId").delete((req, res) => {
-  Pick.deleteMany({leagueId: req.params.leagueId})
-    .then((data) => res.json(data))
-    .catch((err) => res.status(400).json("Error: " + err))
-})
+router
+  .route("/remove_picks/:leagueId")
+  .delete(authenticateToken, (req, res) => {
+    Pick.deleteMany({leagueId: req.params.leagueId})
+      .then((data) => res.json(data))
+      .catch((err) => res.status(400).json("Error: " + err))
+  })
 
 module.exports = router
