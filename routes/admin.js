@@ -252,28 +252,30 @@ router.route("/init_defenses").post(authenticateToken, (req, res) => {
 })
 
 // init all empty position rankings
-router.route("/init_pos_rankings/:scoringType").post((req, res) => {
-  const positions = Object.keys(POSITION_RANKINGS_TOTALS)
-  // console.log("positions", positions)
-  positions.forEach((pos) => {
-    for (let i = 1; i < POSITION_RANKINGS_TOTALS[pos] + 1; i++) {
-      const newPosRanking = new Position_Ranking({
-        position: pos,
-        scoringType: req.params.scoringType,
-        rank: i,
-        playerId: "",
-      })
+router
+  .route("/init_pos_rankings/:scoringType")
+  .post(authenticateToken, (req, res) => {
+    const positions = Object.keys(POSITION_RANKINGS_TOTALS)
+    // console.log("positions", positions)
+    positions.forEach((pos) => {
+      for (let i = 1; i < POSITION_RANKINGS_TOTALS[pos] + 1; i++) {
+        const newPosRanking = new Position_Ranking({
+          position: pos,
+          scoringType: req.params.scoringType,
+          rank: i,
+          playerId: "",
+        })
 
-      newPosRanking
-        .save()
-        .then((data) => res.json(data))
-        .catch((err) => res.status(400).json("Error: " + err))
-    }
+        newPosRanking
+          .save()
+          .then((data) => res.json(data))
+          .catch((err) => res.status(400).json("Error: " + err))
+      }
+    })
   })
-})
 
 // create Position Ranking
-router.route("/position_ranking").post((req, res) => {
+router.route("/position_ranking").post(authenticateToken, (req, res) => {
   const {position, scoringType, rank, playerId} = req.body
 
   const newPositionRanking = new Position_Ranking({
@@ -290,31 +292,40 @@ router.route("/position_ranking").post((req, res) => {
 })
 
 // update Position Ranking
-router.route("/position_ranking/:position_rankingId").patch((req, res) => {
-  Position_Ranking.findByIdAndUpdate(req.params.position_rankingId, req.body, {
-    new: true,
-  })
-    .then((data) => res.json(data))
-    .catch((err) => res.status(400).json("Error: " + err))
-})
-// init all empty overall rankings
-router.route("/init_overall_rankings/:scoringType").post((req, res) => {
-  for (let i = 1; i < 301; i++) {
-    const newOverallRanking = new Overall_Ranking({
-      scoringType: req.params.scoringType,
-      rank: i,
-      playerId: "",
-    })
-
-    newOverallRanking
-      .save()
+router
+  .route("/position_ranking/:position_rankingId")
+  .patch(authenticateToken, (req, res) => {
+    Position_Ranking.findByIdAndUpdate(
+      req.params.position_rankingId,
+      req.body,
+      {
+        new: true,
+      }
+    )
       .then((data) => res.json(data))
       .catch((err) => res.status(400).json("Error: " + err))
-  }
-})
+  })
+
+// init all empty overall rankings
+router
+  .route("/init_overall_rankings/:scoringType")
+  .post(authenticateToken, (req, res) => {
+    for (let i = 1; i < 301; i++) {
+      const newOverallRanking = new Overall_Ranking({
+        scoringType: req.params.scoringType,
+        rank: i,
+        playerId: "",
+      })
+
+      newOverallRanking
+        .save()
+        .then((data) => res.json(data))
+        .catch((err) => res.status(400).json("Error: " + err))
+    }
+  })
 
 // create Overall Ranking
-router.route("/overall_ranking").post((req, res) => {
+router.route("/overall_ranking").post(authenticateToken, (req, res) => {
   const {scoringType, rank, playerId} = req.body
 
   const newOverallRanking = new Overall_Ranking({
@@ -330,26 +341,30 @@ router.route("/overall_ranking").post((req, res) => {
 })
 
 // update Overall Ranking
-router.route("/overall_ranking/:overall_rankingId").patch((req, res) => {
-  Overall_Ranking.findByIdAndUpdate(req.params.overall_rankingId, req.body, {
-    new: true,
+router
+  .route("/overall_ranking/:overall_rankingId")
+  .patch(authenticateToken, (req, res) => {
+    Overall_Ranking.findByIdAndUpdate(req.params.overall_rankingId, req.body, {
+      new: true,
+    })
+      .then((data) => res.json(data))
+      .catch((err) => res.status(400).json("Error: " + err))
   })
-    .then((data) => res.json(data))
-    .catch((err) => res.status(400).json("Error: " + err))
-})
 
 // remove pick
-router.route("/pick/:pickId").delete((req, res) => {
+router.route("/pick/:pickId").delete(authenticateToken, (req, res) => {
   Pick.findByIdAndRemove(req.params.pickId)
     .then((data) => res.json(data))
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
 // remove all picks by league
-router.route("/remove_picks/:leagueId").delete((req, res) => {
-  Pick.deleteMany({leagueId: req.params.leagueId})
-    .then((data) => res.json(data))
-    .catch((err) => res.status(400).json("Error: " + err))
-})
+router
+  .route("/remove_picks/:leagueId")
+  .delete(authenticateToken, (req, res) => {
+    Pick.deleteMany({leagueId: req.params.leagueId})
+      .then((data) => res.json(data))
+      .catch((err) => res.status(400).json("Error: " + err))
+  })
 
 module.exports = router
