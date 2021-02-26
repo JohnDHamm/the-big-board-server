@@ -91,7 +91,7 @@ router.route("/league/:leagueId").patch(authenticateToken, (req, res) => {
 })
 
 // create Owner
-router.route("/owner").post((req, res) => {
+router.route("/owner").post(authenticateToken, (req, res) => {
   const {name, leagueId, isCommish, password} = req.body
 
   const newOwner = new Owner({
@@ -108,7 +108,7 @@ router.route("/owner").post((req, res) => {
 })
 
 // update Owner
-router.route("/owner/:ownerId").patch((req, res) => {
+router.route("/owner/:ownerId").patch(authenticateToken, (req, res) => {
   Owner.findByIdAndUpdate(req.params.ownerId, req.body, {
     new: true,
   })
@@ -117,14 +117,14 @@ router.route("/owner/:ownerId").patch((req, res) => {
 })
 
 // get all owners
-router.route("/all_owners").get((req, res) => {
+router.route("/all_owners").get(authenticateToken, (req, res) => {
   Owner.find()
     .then((data) => res.json(data))
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
 // remove owner
-router.route("/owner/:ownerId").delete((req, res) => {
+router.route("/owner/:ownerId").delete(authenticateToken, (req, res) => {
   Owner.findByIdAndRemove(req.params.ownerId)
     .then((data) => res.json(data))
     .catch((err) => res.status(400).json("Error: " + err))
