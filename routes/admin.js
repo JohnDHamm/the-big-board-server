@@ -9,25 +9,7 @@ const Overall_Ranking = require("../models/overall_ranking.model")
 const {NFL_Teams} = require("../data/nfl_teams")
 const {POSITION_RANKINGS_TOTALS} = require("../data/position_rankings")
 const jwt = require("jsonwebtoken")
-
-const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers["authorization"]
-  const token = authHeader && authHeader.split(" ")[1]
-
-  if (!token)
-    return res.status(401).send({auth: false, message: "No token provided."})
-
-  jwt.verify(token, process.env.ADMIN_TOKEN_SECRET, (err, user) => {
-    if (err) {
-      console.log(err)
-      return res
-        .status(500)
-        .send({auth: false, message: "Failed to authenticate token."})
-    }
-    req.user = user
-    next()
-  })
-}
+const authenticateToken = require("../utils/index.js")
 
 router.route("/").get((req, res) => {
   res.send("hey there admin!")
