@@ -6,6 +6,8 @@ const mongoose = require("mongoose")
 const League = require("./models/league.model")
 const Owner = require("./models/owner.model")
 const Pick = require("./models/pick.model")
+const jwt = require("jsonwebtoken")
+const authenticateToken = require("./utils/index.js")
 
 require("dotenv").config()
 
@@ -72,13 +74,15 @@ app.post("/api/login", (req, res) => {
       if (owners[0]) {
         const user = owners[0]
         if (req.body.password === user.password) {
+          const token = jwt.sign(user.name, process.env.ADMIN_TOKEN_SECRET)
           const newUser = {
             _id: user._id,
             name: user.name,
             leagueId: user.leagueId,
             isCommish: user.isCommish,
+            accessToken: token,
           }
-          res.json(newUser)
+          res.status(200).json(newUser)
           io.to(req.body.leagueId).emit(
             "JoinRoomWelcome",
             req.body.name + " has joined."
@@ -99,7 +103,7 @@ app.post("/api/login", (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
-app.post("/api/pick", (req, res) => {
+app.post("/api/pick", authenticateToken, (req, res) => {
   const {selectionNumber, leagueId, ownerId, playerId} = req.body
 
   const newPick = new Pick({
@@ -118,7 +122,7 @@ app.post("/api/pick", (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
-app.patch("/api/draft_status/:leagueId", (req, res) => {
+app.patch("/api/draft_status/:leagueId", authenticateToken, (req, res) => {
   const {leagueId} = req.params
   League.findByIdAndUpdate(leagueId, req.body, {
     new: true,
@@ -130,7 +134,7 @@ app.patch("/api/draft_status/:leagueId", (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
-app.patch("/commish/start_draft", (req, res) => {
+app.patch("/commish/start_draft", authenticateToken, (req, res) => {
   const {leagueId, message} = req.body
   League.findByIdAndUpdate(
     leagueId,
@@ -146,7 +150,7 @@ app.patch("/commish/start_draft", (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
-app.patch("/commish/pause_draft", (req, res) => {
+app.patch("/commish/pause_draft", authenticateToken, (req, res) => {
   const {leagueId, message} = req.body
   League.findByIdAndUpdate(
     leagueId,
@@ -162,7 +166,7 @@ app.patch("/commish/pause_draft", (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
-app.patch("/commish/reopen_draft", (req, res) => {
+app.patch("/commish/reopen_draft", authenticateToken, (req, res) => {
   const {leagueId, message} = req.body
   League.findByIdAndUpdate(
     leagueId,
