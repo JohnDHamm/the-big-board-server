@@ -7,7 +7,7 @@ module.exports.NFL_Teams = [
       primary: "#97233F",
       secondary: "#000000",
     },
-    byeWeek: 8,
+    byeWeek: 12,
   },
   {
     city: "Atlanta",
@@ -17,7 +17,7 @@ module.exports.NFL_Teams = [
       primary: "#A71930",
       secondary: "#000000",
     },
-    byeWeek: 10,
+    byeWeek: 6,
   },
   {
     city: "Baltimore",
@@ -37,7 +37,7 @@ module.exports.NFL_Teams = [
       primary: "#00338D",
       secondary: "#C60C30",
     },
-    byeWeek: 11,
+    byeWeek: 7,
   },
   {
     city: "Carolina",
@@ -47,7 +47,7 @@ module.exports.NFL_Teams = [
       primary: "#0085CA",
       secondary: "#101820",
     },
-    byeWeek: 11,
+    byeWeek: 13,
   },
   {
     city: "Chicago",
@@ -57,7 +57,7 @@ module.exports.NFL_Teams = [
       primary: "#0B162A",
       secondary: "#C83803",
     },
-    byeWeek: 11,
+    byeWeek: 10,
   },
   {
     city: "Cincinnati",
@@ -67,7 +67,7 @@ module.exports.NFL_Teams = [
       primary: "#FB4F14",
       secondary: "#000000",
     },
-    byeWeek: 11,
+    byeWeek: 10,
   },
   {
     city: "Cleveland",
@@ -77,7 +77,7 @@ module.exports.NFL_Teams = [
       primary: "#311D00",
       secondary: "#FF3C00",
     },
-    byeWeek: 11,
+    byeWeek: 13,
   },
   {
     city: "Dallas",
@@ -87,7 +87,7 @@ module.exports.NFL_Teams = [
       primary: "#041E42",
       secondary: "#869397",
     },
-    byeWeek: 10,
+    byeWeek: 7,
   },
   {
     city: "Denver",
@@ -97,7 +97,7 @@ module.exports.NFL_Teams = [
       primary: "#002244",
       secondary: "#FB4F14",
     },
-    byeWeek: 8,
+    byeWeek: 11,
   },
   {
     city: "Detroit",
@@ -107,7 +107,7 @@ module.exports.NFL_Teams = [
       primary: "#0076B6",
       secondary: "#B0B7BC",
     },
-    byeWeek: 5,
+    byeWeek: 9,
   },
   {
     city: "Green Bay",
@@ -117,7 +117,7 @@ module.exports.NFL_Teams = [
       primary: "#203731",
       secondary: "#FFB612",
     },
-    byeWeek: 5,
+    byeWeek: 13,
   },
   {
     city: "Houston",
@@ -127,7 +127,7 @@ module.exports.NFL_Teams = [
       primary: "#03202F",
       secondary: "#A71930",
     },
-    byeWeek: 8,
+    byeWeek: 10,
   },
   {
     city: "Indianapolis",
@@ -137,7 +137,7 @@ module.exports.NFL_Teams = [
       primary: "#002C5F",
       secondary: "#A2AAAD",
     },
-    byeWeek: 7,
+    byeWeek: 14,
   },
   {
     city: "Jacksonville",
@@ -157,7 +157,7 @@ module.exports.NFL_Teams = [
       primary: "#E31837",
       secondary: "#FFB81C",
     },
-    byeWeek: 10,
+    byeWeek: 12,
   },
   {
     city: "Las Vegas",
@@ -167,7 +167,7 @@ module.exports.NFL_Teams = [
       primary: "#000000",
       secondary: "#A5ACAF",
     },
-    byeWeek: 6,
+    byeWeek: 8,
   },
   {
     city: "Los Angeles",
@@ -177,7 +177,7 @@ module.exports.NFL_Teams = [
       primary: "#0080C6",
       secondary: "#FFC20E",
     },
-    byeWeek: 10,
+    byeWeek: 7,
   },
   {
     city: "Los Angeles",
@@ -187,7 +187,7 @@ module.exports.NFL_Teams = [
       primary: "#003594",
       secondary: "#FFD100",
     },
-    byeWeek: 9,
+    byeWeek: 11,
   },
   {
     city: "Miami",
@@ -197,7 +197,7 @@ module.exports.NFL_Teams = [
       primary: "#008E97",
       secondary: "#F5821F",
     },
-    byeWeek: 11,
+    byeWeek: 14,
   },
   {
     city: "Minnesota",
@@ -217,7 +217,7 @@ module.exports.NFL_Teams = [
       primary: "#002244",
       secondary: "#C60C30",
     },
-    byeWeek: 6,
+    byeWeek: 14,
   },
   {
     city: "New Orleans",
@@ -237,7 +237,7 @@ module.exports.NFL_Teams = [
       primary: "#0B2265",
       secondary: "#A71930",
     },
-    byeWeek: 11,
+    byeWeek: 10,
   },
   {
     city: "New York",
@@ -247,7 +247,7 @@ module.exports.NFL_Teams = [
       primary: "#125740",
       secondary: "#E6E7E8",
     },
-    byeWeek: 11,
+    byeWeek: 6,
   },
   {
     city: "Philadelphia",
@@ -257,7 +257,7 @@ module.exports.NFL_Teams = [
       primary: "#004C54",
       secondary: "#A5ACAF",
     },
-    byeWeek: 9,
+    byeWeek: 14,
   },
   {
     city: "Pittsburgh",
@@ -267,7 +267,7 @@ module.exports.NFL_Teams = [
       primary: "#101820",
       secondary: "#FFB612",
     },
-    byeWeek: 8,
+    byeWeek: 7,
   },
   {
     city: "San Francisco",
@@ -277,7 +277,7 @@ module.exports.NFL_Teams = [
       primary: "#AA0000",
       secondary: "#B3995D",
     },
-    byeWeek: 11,
+    byeWeek: 6,
   },
   {
     city: "Seattle",
@@ -287,7 +287,7 @@ module.exports.NFL_Teams = [
       primary: "#002244",
       secondary: "#69BE28",
     },
-    byeWeek: 6,
+    byeWeek: 9,
   },
   {
     city: "Tampa Bay",
@@ -297,7 +297,7 @@ module.exports.NFL_Teams = [
       primary: "#D50A0A",
       secondary: "#34302B",
     },
-    byeWeek: 13,
+    byeWeek: 9,
   },
   {
     city: "Tennessee",
@@ -307,7 +307,7 @@ module.exports.NFL_Teams = [
       primary: "#0C2340",
       secondary: "#4B92DB",
     },
-    byeWeek: 7,
+    byeWeek: 13,
   },
   {
     city: "Washington",
@@ -317,7 +317,7 @@ module.exports.NFL_Teams = [
       primary: "#773141",
       secondary: "#FFB612",
     },
-    byeWeek: 8,
+    byeWeek: 9,
   },
   {
     city: "Unknown",
