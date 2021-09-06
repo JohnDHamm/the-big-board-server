@@ -182,4 +182,17 @@ app.patch("/commish/reopen_draft", authenticateToken, (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err))
 })
 
+app.get("/commish/ping_owners/:leagueId", authenticateToken, (req, res) => {
+  console.log("pinging owners")
+  res.send("pinging owners")
+  io.to(req.params.leagueId).emit("PingOwner")
+})
+
+app.post("/api/ping_answer", authenticateToken, (req, res) => {
+  const {leagueId, ownerId} = req.body
+  console.log("ping answered by", ownerId)
+  res.send("ping answered")
+  io.to(leagueId).emit("OwnerPingAnswer", ownerId)
+})
+
 server.listen(port, () => console.log("listening at port:", port))
